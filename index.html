@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Media Sphere EPUB Reader</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="left-controls">
+      <button id="toggleTocBtn" class="btn-icon" aria-label="Toggle Table of Contents">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1>Media Sphere</h1>
+    </div>
+    <div class="right-controls">
+      <button id="themeToggle" class="btn-icon" aria-label="Toggle Theme">
+        <i class="fas fa-circle-half-stroke"></i>
+      </button>
+      <div class="font-size-controls">
+        <button onclick="zoomOut()" class="btn-icon" aria-label="Decrease Font Size">
+          <i class="fas fa-minus"></i>
+        </button>
+        <span id="fontSizeDisplay">18px</span>
+        <button onclick="zoomIn()" class="btn-icon" aria-label="Increase Font Size">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <label for="fileInput" class="file-upload-btn">
+        <i class="fas fa-book-open"></i>
+        <span>Open EPUB</span>
+      </label>
+      <input type="file" id="fileInput" accept=".epub" onchange="loadEpub()" />
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside id="toc" class="toc-drawer toc-closed">
+      <div class="toc-header">
+        <h2>Table of Contents</h2>
+        <button class="close-toc" aria-label="Close Table of Contents">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="bookInfo" class="book-info">
+        <div id="coverThumb" class="cover-thumb"></div>
+        <div class="book-metadata">
+          <h3 id="bookTitle">No Book Loaded</h3>
+          <p id="bookAuthor"></p>
+        </div>
+      </div>
+      <div class="toc-divider"></div>
+      <nav id="tocContent" class="toc-content">
+        <p class="toc-empty">Open an EPUB file to view contents</p>
+      </nav>
+    </aside>
+
+    <main id="viewer">
+      <section id="content" class="scroll-container">
+        <div class="welcome">
+          <div class="welcome-content">
+            <i class="fas fa-book fa-3x"></i>
+            <h2>Media Sphere EPUB Reader</h2>
+            <p>Open an EPUB file to begin reading</p>
+            <label for="fileInput" class="welcome-upload-btn">
+              <i class="fas fa-file-upload"></i> Select EPUB
+            </label>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer id="controls">
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+    <div class="controls-content">
+      <button id="prevButton" onclick="prevChapter()" disabled>
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <span id="pageInfo">Page -/-</span>
+      <button id="nextButton" onclick="nextChapter()" disabled>
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </footer>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p id="loadingText">Loading EPUB...</p>
+  </div>
+  
+  <div class="error-message" id="errorMessage"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
